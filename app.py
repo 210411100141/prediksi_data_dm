@@ -25,8 +25,8 @@ with tab1:
 
 with tab2:
     # X AND Y DATA
-    x = df.drop(['Penyakit'], axis=1)
-    y = df['Penyakit']
+    x = df.drop(['Outcome'], axis=1)
+    y = df['Outcome']
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
 
     # FUNCTION

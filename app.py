@@ -75,7 +75,7 @@ with tab2:
     plt.xticks(np.arange(10, 100, 5))
     plt.yticks(np.arange(0, 220, 10))
     plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_glucose)
+    st.pyplot(fig_glukosa)
 
     # Age vs Blood Pressure
     st.header('Blood Pressure Value Graph (Others vs Yours)')
@@ -85,7 +85,7 @@ with tab2:
     plt.xticks(np.arange(10, 100, 5))
     plt.yticks(np.arange(0, 130, 10))
     plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_bp)
+    st.pyplot(fig_tekanan_darah)
 
     # Age vs Skin Thickness
     st.header('Skin Thickness Value Graph (Others vs Yours)')
@@ -95,7 +95,7 @@ with tab2:
     plt.xticks(np.arange(10, 100, 5))
     plt.yticks(np.arange(0, 110, 10))
     plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_st)
+    st.pyplot(fig_ketebalan_kulit)
 
     # Age vs Insulin
     st.header('Insulin Value Graph (Others vs Yours)')
@@ -105,7 +105,7 @@ with tab2:
     plt.xticks(np.arange(10, 100, 5))
     plt.yticks(np.arange(0, 900, 50))
     plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_i)
+    st.pyplot(fig_insulin)
 
     # Age vs BMI
     st.header('BMI Value Graph (Others vs Yours)')

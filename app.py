@@ -36,8 +36,8 @@ with tab2:
 
     # FUNCTION
     def user_report():
-        usia = st.sidebar.slider('Usia', 0, 17, 3)
-        glukosa = st.sidebar.slider('Glukosa', 0, 200, 120)
+        usia = st.sidebar.slider('Usia', 19, 81, 25)
+        glukosa = st.sidebar.slider('Glukosa', 68, 197, 120)
         td = st.sidebar.slider('Tekanan Darah', 0, 122, 70)
         kk = st.sidebar.slider('Ketebalan Kulit', 0, 100, 20)
         insulin = st.sidebar.slider('Insulin', 0, 846, 79)

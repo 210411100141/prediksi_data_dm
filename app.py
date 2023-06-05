@@ -30,9 +30,9 @@ with tab1:
 
 with tab2:
     # X AND Y DATA
-    x = df.drop(['Outcome'], axis=1)
+    x = df.drop(['Outcome'], axis = 1)
     y = df.iloc[:, -1]
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
+    x_train, x_test, y_train, y_test = train_test_split(x,y, test_size = 0.2, random_state=0)
 
     # FUNCTION
     def user_report():
@@ -78,7 +78,7 @@ with tab2:
     plt.xticks(np.arange(10, 100, 5))
     plt.yticks(np.arange(0, 20, 2))
     plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_glukosa)
+    st.pyplot(fig_glu)
 
     # Usia vs Tekanan Darah
     st.header('Glucose Value Graph (Others vs Yours)')

@@ -36,12 +36,12 @@ with tab2:
 
     # FUNCTION
     def user_report():
-        usia = st.sidebar.slider('Usia', 19, 81, 25)
+        usia = st.sidebar.slider('Usia', 19, 81, 39)
         glukosa = st.sidebar.slider('Glukosa', 68, 197, 120)
-        td = st.sidebar.slider('Tekanan Darah', 0, 122, 70)
-        kk = st.sidebar.slider('Ketebalan Kulit', 0, 100, 20)
-        insulin = st.sidebar.slider('Insulin', 0, 846, 79)
-        bmi = st.sidebar.slider('BMI', 0, 67, 20)
+        td = st.sidebar.slider('Tekanan Darah', 0, 110, 64)
+        kk = st.sidebar.slider('Ketebalan Kulit', 7, 52, 23)
+        insulin = st.sidebar.slider('Insulin', 0, 978, 96)
+        bmi = st.sidebar.slider('BMI', 19.6, 55, 25.5)
 
         user_report_data = {
             'usia': usia,
@@ -75,18 +75,18 @@ with tab2:
     fig_preg = plt.figure()
     ax1 = sns.scatterplot(x='Usia', y='Glukosa', data=df, hue='Outcome', palette='Greens')
     ax2 = sns.scatterplot(x=user_data['usia'], y=user_data['glukosa'], s=150, color=color)
-    plt.xticks(np.arange(10, 100, 5))
-    plt.yticks(np.arange(0, 20, 2))
+    plt.xticks(np.arange(15, 90, 5))
+    plt.yticks(np.arange(60, 200, 10))
     plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_glu)
+    st.pyplot(fig_glukosa)
 
     # Usia vs Tekanan Darah
     st.header('Glucose Value Graph (Others vs Yours)')
     fig_glucose = plt.figure()
     ax3 = sns.scatterplot(x='Usia', y='TekananDarah', data=df, hue='Outcome', palette='magma')
     ax4 = sns.scatterplot(x=user_data['usia'], y=user_data['td'], s=150, color=color)
-    plt.xticks(np.arange(10, 100, 5))
-    plt.yticks(np.arange(0, 220, 10))
+    plt.xticks(np.arange(15, 90, 5))
+    plt.yticks(np.arange(0, 120, 10))
     plt.title('0 - Healthy & 1 - Unhealthy')
     st.pyplot(fig_td)
 
@@ -95,8 +95,8 @@ with tab2:
     fig_bp = plt.figure()
     ax5 = sns.scatterplot(x='Usia', y='KetebalanKulit', data=df, hue='Outcome', palette='Reds')
     ax6 = sns.scatterplot(x=user_data['usia'], y=user_data['kk'], s=150, color=color)
-    plt.xticks(np.arange(10, 100, 5))
-    plt.yticks(np.arange(0, 130, 10))
+    plt.xticks(np.arange(15, 90, 5))
+    plt.yticks(np.arange(5, 60, 5))
     plt.title('0 - Healthy & 1 - Unhealthy')
     st.pyplot(fig_kk)
 
@@ -105,8 +105,8 @@ with tab2:
     fig_st = plt.figure()
     ax7 = sns.scatterplot(x='Usia', y='Insulin', data=df, hue='Outcome', palette='Blues')
     ax8 = sns.scatterplot(x=user_data['usia'], y=user_data['insulin'], s=150, color=color)
-    plt.xticks(np.arange(10, 100, 5))
-    plt.yticks(np.arange(0, 110, 10))
+    plt.xticks(np.arange(15, 90, 5))
+    plt.yticks(np.arange(0, 1000, 50))
     plt.title('0 - Healthy & 1 - Unhealthy')
     st.pyplot(fig_insulin)
 
@@ -115,8 +115,8 @@ with tab2:
     fig_i = plt.figure()
     ax9 = sns.scatterplot(x='Usia', y='BMI', data=df, hue='Outcome', palette='rocket')
     ax10 = sns.scatterplot(x=user_data['usia'], y=user_data['bmi'], s=150, color=color)
-    plt.xticks(np.arange(10, 100, 5))
-    plt.yticks(np.arange(0, 900, 50))
+    plt.xticks(np.arange(15, 90, 5))
+    plt.yticks(np.arange(18.5, 60, 0.5))
     plt.title('0 - Healthy & 1 - Unhealthy')
     st.pyplot(fig_bmi)
 

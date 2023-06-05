@@ -1,132 +1,50 @@
-#pip install streamlit
-#pip install pandas
-#pip install sklearn
-#pip install plotly
-
-# IMPORT STATEMENTS
 import streamlit as st
 import pandas as pd
-from PIL import Image
 import numpy as np
-import matplotlib.pyplot as plt
-import plotly.figure_factory as ff
-from sklearn.metrics import accuracy_score
 from sklearn.cluster import KMeans
-from sklearn.model_selection import train_test_split
-import seaborn as sns
+from sklearn.metrics import accuracy_score
 
-df = pd.read_csv("dm.csv")
+# Mengambil data diabetes dari file CSV atau DataFrame Anda
+data_path = "dm.csv"
+df = pd.read_csv(data_path)
 
-# HEADINGS
-st.title('Prediksi Diabetes')
-st.sidebar.header('Patient Data')
-st.subheader('Training Data Stats')
-st.write(df.describe())
+# Menghilangkan kolom Outcome karena itu adalah label yang akan diprediksi
+X = df.drop("Outcome", axis=1)
 
-tab1, tab2 = st.tabs(["Deskripsi Data", "Tab Visualisasi data"])
+# Membuat fungsi untuk melakukan clustering dengan metode K-means
+def kmeans_clustering(data, num_clusters):
+    kmeans = KMeans(n_clusters=num_clusters, random_state=0)
+    kmeans.fit(data)
+    labels = kmeans.labels_
+    return labels
 
-with tab1:
-    st.image("ar.png")
-
-with tab2:
-    # X AND Y DATA
-    x = df.drop(['Outcome'], axis = 1)
-    y = df.iloc[:, -1]
-    x_train, x_test, y_train, y_test = train_test_split(x,y, test_size = 0.2, random_state=0)
-
-    # FUNCTION
-    def user_report():
-        usia = st.sidebar.slider('Usia', 19, 81, 39)
-        glukosa = st.sidebar.slider('Glukosa', 68, 197, 120)
-        td = st.sidebar.slider('Tekanan Darah', 0, 110, 64)
-        kk = st.sidebar.slider('Ketebalan Kulit', 7, 52, 23)
-        insulin = st.sidebar.slider('Insulin', 0, 978, 96)
-        bmi = st.sidebar.slider('BMI', 19.6, 55, 25.5)
-
-        user_report_data = {
-            'usia': usia,
-            'glukosa': glukosa,
-            'td': td,
-            'kk': kk,
-            'insulin': insulin,
-            'bmi': bmi,
-        }
-        report_data = pd.DataFrame(user_report_data, index=[0])
-        return report_data
-
-    # PATIENT DATA
-    user_data = user_report()
-    st.subheader('Patient Data')
-    st.write(user_data)
-
-    # MODEL
-    kmeans = KMeans(n_clusters=2, random_state=0)
-    kmeans.fit(x_train, y_train)
-    user_result = kmeans.predict(user_data)
-
-    # COLOR FUNCTION
-    if user_result[0] == 0:
-        color = 'blue'
-    else:
-        color = 'red'
-
-    # Usia vs Glukosa
-    st.header('Pregnancy count Graph (Others vs Yours)')
-    fig_preg = plt.figure()
-    ax1 = sns.scatterplot(x='Usia', y='Glukosa', data=df, hue='Outcome', palette='Greens')
-    ax2 = sns.scatterplot(x=user_data['usia'], y=user_data['glukosa'], s=150, color=color)
-    plt.xticks(np.arange(15, 90, 5))
-    plt.yticks(np.arange(60, 200, 10))
-    plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_glukosa)
-
-    # Usia vs Tekanan Darah
-    st.header('Glucose Value Graph (Others vs Yours)')
-    fig_glucose = plt.figure()
-    ax3 = sns.scatterplot(x='Usia', y='TekananDarah', data=df, hue='Outcome', palette='magma')
-    ax4 = sns.scatterplot(x=user_data['usia'], y=user_data['td'], s=150, color=color)
-    plt.xticks(np.arange(15, 90, 5))
-    plt.yticks(np.arange(0, 120, 10))
-    plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_td)
-
-    # Usia vs Ketebalan Kulit
-    st.header('Blood Pressure Value Graph (Others vs Yours)')
-    fig_bp = plt.figure()
-    ax5 = sns.scatterplot(x='Usia', y='KetebalanKulit', data=df, hue='Outcome', palette='Reds')
-    ax6 = sns.scatterplot(x=user_data['usia'], y=user_data['kk'], s=150, color=color)
-    plt.xticks(np.arange(15, 90, 5))
-    plt.yticks(np.arange(5, 60, 5))
-    plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_kk)
-
-    # Usia vs Insulin
-    st.header('Skin Thickness Value Graph (Others vs Yours)')
-    fig_st = plt.figure()
-    ax7 = sns.scatterplot(x='Usia', y='Insulin', data=df, hue='Outcome', palette='Blues')
-    ax8 = sns.scatterplot(x=user_data['usia'], y=user_data['insulin'], s=150, color=color)
-    plt.xticks(np.arange(15, 90, 5))
-    plt.yticks(np.arange(0, 1000, 50))
-    plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_insulin)
-
-    # Usia vs BMI
-    st.header('Insulin Value Graph (Others vs Yours)')
-    fig_i = plt.figure()
-    ax9 = sns.scatterplot(x='Usia', y='BMI', data=df, hue='Outcome', palette='rocket')
-    ax10 = sns.scatterplot(x=user_data['usia'], y=user_data['bmi'], s=150, color=color)
-    plt.xticks(np.arange(15, 90, 5))
-    plt.yticks(np.arange(18.5, 60, 0.5))
-    plt.title('0 - Healthy & 1 - Unhealthy')
-    st.pyplot(fig_bmi)
-
-# OUTPUT
-st.subheader('Your Report: ')
-output = ''
-if user_result[0] == 0:
-    output = 'You are not Diabetic'
-else:
-    output = 'You are Diabetic'
-st.title(output)
-st.subheader('Accuracy: ')
-st.write(str(accuracy_score(y_test, kmeans.predict(x_test)) * 100) + '%')
+# Membuat halaman dengan Streamlit
+def main():
+    st.title("Aplikasi Clustering K-means untuk Data Penyakit Diabetes")
+    
+    # Menampilkan data awal
+    st.subheader("Data Penyakit Diabetes")
+    st.dataframe(df)
+    
+    # Mengambil jumlah cluster dari pengguna
+    num_clusters = st.slider("Jumlah Cluster", min_value=2, max_value=10, value=3)
+    
+    # Melakukan clustering dengan metode K-means
+    labels = kmeans_clustering(X, num_clusters)
+    
+    # Menampilkan hasil clustering
+    st.subheader("Hasil Clustering")
+    df_result = df.copy()
+    df_result["Cluster"] = labels
+    st.dataframe(df_result)
+    
+    # Menghitung akurasi clustering dengan menggunakan kolom "Outcome" sebagai label
+    true_labels = df["Outcome"]
+    accuracy = accuracy_score(true_labels, labels)
+    
+    # Menampilkan akurasi clustering
+    st.subheader("Akurasi Clustering")
+    st.write(f"Akurasi: {accuracy}")
+    
+if __name__ == "__main__":
+    main()

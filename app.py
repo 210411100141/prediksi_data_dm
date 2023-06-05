@@ -15,7 +15,7 @@ from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 import seaborn as sns
 
-df = pd.read_csv("diabetes.csv")
+df = pd.read_csv("dm.csv")
 
 # HEADINGS
 st.title('Prediksi Diabetes')

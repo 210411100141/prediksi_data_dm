@@ -25,7 +25,7 @@ st.write(df.describe())
 tab1, tab2 = st.tabs(["Deskripsi Data", "Tab Visualisasi data"])
 
 with tab1:
-   st.image("ar.png")
+   st.image("bg.jpg")
 
 with tab2:
    # X AND Y DATA

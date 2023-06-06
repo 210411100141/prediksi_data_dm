@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.figure_factory as ff
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import silhouette_score
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 
@@ -64,6 +65,8 @@ with tab2:
    kmeans = KMeans(n_clusters=2, random_state=0)
    kmeans.fit(x_scaled)
    user_result = kmeans.predict(scaler.transform(user_data))
+   cluster_labels = kmeans.labels_
+   silhouette = silhouette_score(x_scaled, cluster_labels)
       
    # COLOR FUNCTION
    if user_result[0] == 0:
@@ -131,4 +134,6 @@ else:
 st.title(output)
 st.subheader('Accuracy: ')
 st.write('N/A')
+st.subheader('Silhoutte Score:')
+st.write(silhoutte)
 

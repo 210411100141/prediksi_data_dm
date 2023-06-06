@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # Load dataset diabetes
-diabetes = load_diabetes()
+diabetes = load_diabetes('dm.csv')
 X = diabetes.data
 y = diabetes.target
 

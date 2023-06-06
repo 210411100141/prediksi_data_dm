@@ -135,5 +135,5 @@ st.title(output)
 st.subheader('Accuracy: ')
 st.write('N/A')
 st.subheader('Silhoutte Score:')
-st.write(silhoutte)
+st.write(silhouette)
 

@@ -1,151 +1,40 @@
-#pip install streamlit
-#pip install pandas
-#pip install sklearn
-
-
-import streamlit as st
-import pandas as pd
-from sklearn.metrics import accuracy_score
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-import seaborn as sns
+from sklearn.metrics import accuracy_score
 
-df = pd.read_csv("diabetes.csv")
+# Load dataset diabetes
+diabetes = load_diabetes()
+X = diabetes.data
+y = diabetes.target
 
-# HEADINGS
-st.title('Diabetes Checkup')
-st.sidebar.header('Patient Data')
-st.subheader('Training Data Stats')
-st.write(df.describe())
+# Membagi dataset menjadi data training dan data testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-tab1, tab2 = st.tabs(["Deskripsi Data", "Tab Visualisasi data"])
+# Menerapkan metode k-means
+kmeans = KMeans(n_clusters=2, random_state=42)
+kmeans.fit(X_train)
 
-with tab1:
-   st.image("ar.png")
+# Mendapatkan cluster label untuk data training
+train_labels = kmeans.labels_
 
-with tab2:
-   # X AND Y DATA
-   x = df.drop(['Outcome'], axis=1)
-   y = df['Outcome']
-   x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
-   
-   # FUNCTION
-   def user_report():
-      pregnancies = st.sidebar.slider('Pregnancies', 0, 17, 3)
-      glucose = st.sidebar.slider('Glucose', 0, 200, 120)
-      bp = st.sidebar.slider('Blood Pressure', 0, 122, 70)
-      skinthickness = st.sidebar.slider('Skin Thickness', 0, 100, 20)
-      insulin = st.sidebar.slider('Insulin', 0, 846, 79)
-      bmi = st.sidebar.slider('BMI', 0, 67, 20)
-      dpf = st.sidebar.slider('Diabetes Pedigree Function', 0.0, 2.4, 0.47)
-      age = st.sidebar.slider('Age', 21, 88, 33)
-      
-      user_report_data = {
-         'Pregnancies': pregnancies,
-         'Glucose': glucose,
-         'BloodPressure': bp,
-         'SkinThickness': skinthickness,
-         'Insulin': insulin,
-         'BMI': bmi,
-         'DiabetesPedigreeFunction': dpf,
-         'Age': age
-      }
-      report_data = pd.DataFrame(user_report_data, index=[0])
-      return report_data
-     
-   # PATIENT DATA
-   user_data = user_report()
-   st.subheader('Patient Data')
-   st.write(user_data)
-    
-   # MODEL
-   model = DecisionTreeClassifier()
-   model.fit(x_train, y_train)
-   user_result = model.predict(user_data)
-      
-   # COLOR FUNCTION
-   if user_result[0] == 0:
-      color = 'blue'
-   else:
-      color = 'red'
-   
-   # Age vs Pregnancies
-   st.header('Pregnancy count Graph (Others vs Yours)')
-   fig_preg = plt.figure()
-   ax1 = sns.scatterplot(x='Age', y='Pregnancies', data=df, hue='Outcome', palette='Greens')
-   ax2 = sns.scatterplot(x=user_data['Age'], y=user_data['Pregnancies'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 20, 2))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_preg)
+# Mendapatkan cluster label untuk data testing
+test_labels = kmeans.predict(X_test)
 
-   # Age vs Glucose
-   st.header('Glucose Value Graph (Others vs Yours)')
-   fig_glucose = plt.figure()
-   ax3 = sns.scatterplot(x='Age', y='Glucose', data=df, hue='Outcome', palette='magma')
-   ax4 = sns.scatterplot(x=user_data['Age'], y=user_data['Glucose'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 220, 10))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_glucose)
+# Menghitung akurasi
+accuracy = accuracy_score(y_test, test_labels)
 
-   # Age vs Bp
-   st.header('Blood Pressure Value Graph (Others vs Yours)')
-   fig_bp = plt.figure()
-   ax5 = sns.scatterplot(x='Age', y='BloodPressure', data=df, hue='Outcome', palette='Reds')
-   ax6 = sns.scatterplot(x=user_data['Age'], y=user_data['BloodPressure'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 130, 10))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_bp)
+# Menampilkan grafik
+plt.scatter(X_train[:, 0], X_train[:, 1], c=train_labels)
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='*', s=200, c='red')
+plt.title('Prediksi Penyakit Diabetes menggunakan K-means')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.show()
 
-   # Age vs St
-   st.header('Skin Thickness Value Graph (Others vs Yours)')
-   fig_st = plt.figure()
-   ax7 = sns.scatterplot(x='Age', y='SkinThickness', data=df, hue='Outcome', palette='Blues')
-   ax8 = sns.scatterplot(x=user_data['Age'], y=user_data['SkinThickness'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 110, 10))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_st)
-
-   # Age vs Insulin
-   st.header('Insulin Value Graph (Others vs Yours)')
-   fig_i = plt.figure()
-   ax9 = sns.scatterplot(x='Age', y='Insulin', data=df, hue='Outcome', palette='rocket')
-   ax10 = sns.scatterplot(x=user_data['Age'], y=user_data['Insulin'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 900, 50))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_i)
-
-   # Age vs BMI
-   st.header('BMI Value Graph (Others vs Yours)')
-   fig_bmi = plt.figure()
-   ax11 = sns.scatterplot(x='Age', y='BMI', data=df, hue='Outcome', palette='rainbow')
-   ax12 = sns.scatterplot(x=user_data['Age'], y=user_data['BMI'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 70, 5))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_bmi)
-
-   # Age vs Dpf
-   st.header('DPF Value Graph (Others vs Yours)')
-   fig_dpf = plt.figure()
-   ax13 = sns.scatterplot(x='Age', y='DiabetesPedigreeFunction', data=df, hue='Outcome', palette='YlOrBr')
-   ax14 = sns.scatterplot(x=user_data['Age'], y=user_data['DiabetesPedigreeFunction'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 3, 0.2))
-   plt.title('0 - Healthy & 1 - Unhealthy')
-   st.pyplot(fig_dpf)
-
-# OUTPUT
-st.subheader('Your Report: ')
-output = ''
-if user_result[0] == 0:
-   output = 'You are not Diabetic'
-else:
-   output = 'You are Diabetic'
-st.title(output)
-st.subheader('Accuracy: ')
-st.write(str(accuracy_score(y_test, model.predict(x_test)) * 100) + '%')
+# Menampilkan akurasi dan nilai output
+print("Akurasi prediksi: {:.2f}%".format(accuracy * 100))
+print("Cluster label untuk data testing:")
+print(test_labels)

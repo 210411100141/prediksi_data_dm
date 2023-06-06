@@ -14,7 +14,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 
 
-df = pd.read_csv("diabetes.csv")
+df = pd.read_csv("dm.csv")
 
 # HEADINGS
 st.title('Diabetes Checkup')

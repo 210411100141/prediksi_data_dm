@@ -1,40 +1,47 @@
+import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
-from sklearn.datasets import load_diabetes
-from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 
-# Load dataset diabetes
-diabetes = load_diabetes('dm.csv')
-X = diabetes.data
-y = diabetes.target
+# Fungsi untuk menghitung akurasi
+def calculate_accuracy(true_labels, predicted_labels):
+    return accuracy_score(true_labels, predicted_labels)
 
-# Membagi dataset menjadi data training dan data testing
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Membaca data dari file CSV
+data = pd.read_csv('dm.csv')
 
-# Menerapkan metode k-means
-kmeans = KMeans(n_clusters=2, random_state=42)
-kmeans.fit(X_train)
+# Mengubah data menjadi array numpy
+X = np.array(data.drop('class', axis=1))
 
-# Mendapatkan cluster label untuk data training
-train_labels = kmeans.labels_
+# Menginisialisasi model K-Means
+kmeans = KMeans(n_clusters=2, random_state=0)
 
-# Mendapatkan cluster label untuk data testing
-test_labels = kmeans.predict(X_test)
+# Melatih model K-Means
+kmeans.fit(X)
 
-# Menghitung akurasi
-accuracy = accuracy_score(y_test, test_labels)
+# Mendapatkan label prediksi
+predicted_labels = kmeans.labels_
 
-# Menampilkan grafik
-plt.scatter(X_train[:, 0], X_train[:, 1], c=train_labels)
-plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], marker='*', s=200, c='red')
-plt.title('Prediksi Penyakit Diabetes menggunakan K-means')
+# Mendapatkan nilai centroid
+centroids = kmeans.cluster_centers_
+
+# Menambahkan kolom 'predicted_class' ke dalam DataFrame
+data['predicted_class'] = predicted_labels
+
+# Menampilkan grafik hasil klasterisasi
+plt.scatter(X[:, 0], X[:, 1], c=predicted_labels, cmap='viridis')
+plt.scatter(centroids[:, 0], centroids[:, 1], c='red', marker='x')
+plt.title('K-Means Clustering')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.show()
 
-# Menampilkan akurasi dan nilai output
-print("Akurasi prediksi: {:.2f}%".format(accuracy * 100))
-print("Cluster label untuk data testing:")
-print(test_labels)
+# Menghitung akurasi
+true_labels = np.array(data['class'])
+accuracy = calculate_accuracy(true_labels, predicted_labels)
+print("Akurasi: {:.2f}%".format(accuracy * 100))
+
+# Menampilkan nilai output
+print("Nilai Output:")
+print(data)

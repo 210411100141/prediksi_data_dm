@@ -117,7 +117,7 @@ with tab2:
    plt.scatter(df['Usia'], df['BMI'], c=kmeans.labels_, cmap='viridis')
    plt.scatter(user_data['usia'], user_data['bmi'], s=150, color=color)
    plt.xticks(np.arange(10, 100, 10))
-   plt.yticks(np.arange(10, 470, 20))
+   plt.yticks(np.arange(10, 470, 25))
    plt.title('0 - Cluster 1 & 1 - Cluster 2')
    st.pyplot(fig_bmi)
 

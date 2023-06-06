@@ -36,24 +36,21 @@ with tab2:
    
    # FUNCTION
    def user_report():
-      pregnancies = st.sidebar.slider('Pregnancies', 0, 17, 3)
-      glucose = st.sidebar.slider('Glucose', 0, 200, 120)
-      bp = st.sidebar.slider('Blood Pressure', 0, 122, 70)
-      skinthickness = st.sidebar.slider('Skin Thickness', 0, 100, 20)
-      insulin = st.sidebar.slider('Insulin', 0, 846, 79)
-      bmi = st.sidebar.slider('BMI', 0, 67, 20)
-      dpf = st.sidebar.slider('Diabetes Pedigree Function', 0.0, 2.4, 0.47)
-      age = st.sidebar.slider('Age', 21, 88, 33)
+      usia = st.sidebar.slider('Usia', 15, 80, 20)
+      glukosa = st.sidebar.slider('Glukosa', 70, 200, 90)
+      td = st.sidebar.slider('Tekanan darah', 0, 110, 70)
+      kk = st.sidebar.slider('Ketebalan Kulit', 0, 50, 25)
+      insulin = st.sidebar.slider('Insulin', 0, 900, 200)
+      bmi = st.sidebar.slider('BMI', 20, 450, 50)
+      
       
       user_report_data = {
-         'pregnancies': pregnancies,
-         'glucose': glucose,
-         'bp': bp,
-         'skinthickness': skinthickness,
+         'usia': usia,
+         'glukosa': glukosa,
+         'td': td,
+         'kk': kk,
          'insulin': insulin,
          'bmi': bmi,
-         'dpf': dpf,
-         'age': age
       }
       report_data = pd.DataFrame(user_report_data, index=[0])
       return report_data
@@ -74,75 +71,55 @@ with tab2:
    else:
       color = 'red'
    
-   # Age vs Pregnancies
-   st.header('Pregnancy count Graph (Others vs Yours)')
-   fig_preg = plt.figure()
-   plt.scatter(df['Age'], df['Pregnancies'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['pregnancies'], s=150, color=color)
+   # usia vs glukosa
+   st.header('Glukosa count Graph (Others vs Yours)')
+   fig_glukosa = plt.figure()
+   plt.scatter(df['Usia'], df['Glukosa'], c=kmeans.labels_, cmap='viridis')
+   plt.scatter(user_data['usia'], user_data['glukosa'], s=150, color=color)
    plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 20, 2))
+   plt.yticks(np.arange(60, 200, 5))
    plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_preg)
+   st.pyplot(fig_glukosa)
    
-   # Age vs Glucose
-   st.header('Glucose Value Graph (Others vs Yours)')
-   fig_glucose = plt.figure()
-   plt.scatter(df['Age'], df['Glucose'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['glucose'], s=150, color=color)
+   # usia vs tekanan darah
+   st.header('Tekanan Darah Graph (Others vs Yours)')
+   fig_td = plt.figure()
+   plt.scatter(df['Usia'], df['Tekanan darah'], c=kmeans.labels_, cmap='viridis')
+   plt.scatter(user_data['usia'], user_data['td'], s=150, color=color)
    plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 220, 10))
+   plt.yticks(np.arange(0, 120, 5))
    plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_glucose)
+   st.pyplot(fig_td)
 
-   # Age vs Bp
-   st.header('Blood Pressure Value Graph (Others vs Yours)')
-   fig_bp = plt.figure()
-   plt.scatter(df['Age'], df['BloodPressure'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['bp'], s=150, color=color)
+   # usia vs ketebalan kulit
+   st.header('Ketebalan Kulit Value Graph (Others vs Yours)')
+   fig_kk = plt.figure()
+   plt.scatter(df['Usia'], df['Ketebalan Kulit'], c=kmeans.labels_, cmap='viridis')
+   plt.scatter(user_data['usia'], user_data['kk'], s=150, color=color)
    plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 130, 10))
+   plt.yticks(np.arange(0, 60, 5))
    plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_bp)
+   st.pyplot(fig_kk)
 
-   # Age vs St
-   st.header('Skin Thickness Value Graph (Others vs Yours)')
-   fig_st = plt.figure()
-   plt.scatter(df['Age'], df['SkinThickness'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['skinthickness'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 110, 10))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_st)
-
-   # Age vs Insulin
+   # usia vs insulin
    st.header('Insulin Value Graph (Others vs Yours)')
-   fig_i = plt.figure()
-   plt.scatter(df['Age'], df['Insulin'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['insulin'], s=150, color=color)
+   fig_insulin = plt.figure()
+   plt.scatter(df['Usia'], df['Insulin'], c=kmeans.labels_, cmap='viridis')
+   plt.scatter(user_data['usia'], user_data['insulin'], s=150, color=color)
    plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 900, 50))
+   plt.yticks(np.arange(0, 920, 20))
    plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_i)
+   st.pyplot(fig_insulin)
 
    # Age vs BMI
    st.header('BMI Value Graph (Others vs Yours)')
    fig_bmi = plt.figure()
-   plt.scatter(df['Age'], df['BMI'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['bmi'], s=150, color=color)
+   plt.scatter(df['Usia'], df['BMI'], c=kmeans.labels_, cmap='viridis')
+   plt.scatter(user_data['usia'], user_data['bmi'], s=150, color=color)
    plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 70, 5))
+   plt.yticks(np.arange(10, 470, 10))
    plt.title('0 - Cluster 1 & 1 - Cluster 2')
    st.pyplot(fig_bmi)
-
-   # Age vs Dpf
-   st.header('DPF Value Graph (Others vs Yours)')
-   fig_dpf = plt.figure()
-   plt.scatter(df['Age'], df['DiabetesPedigreeFunction'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['age'], user_data['dpf'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 5))
-   plt.yticks(np.arange(0, 3, 0.2))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_dpf)
 
 # OUTPUT
 st.subheader('Your Report: ')

@@ -23,12 +23,15 @@ st.sidebar.header('Patient Data')
 st.subheader('Training Data Stats')
 st.write(df.describe())
 
-tab1, tab2 = st.tabs(["Deskripsi Data", "Tab Visualisasi data"])
+tab1, tab2, tab3 = st.tabs(["Deskripsi Data","Dataset","Tab Visualisasi data"])
 
 with tab1:
    st.image("bg.jpg")
-
+   
 with tab2:
+   st.image()
+
+with tab3:
    # X AND Y DATA
    x = df.drop(['Outcome'], axis=1)
    y = df.iloc[:, -1]

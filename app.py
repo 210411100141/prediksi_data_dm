@@ -35,6 +35,9 @@ with tab2:
    scaler = MinMaxScaler()
    x_scaled = scaler.fit_transform(x)
    
+with tab3:
+   st.image("data.png")
+   
    # FUNCTION
    def user_report():
       usia = st.sidebar.slider('Usia', 15, 80, 20)

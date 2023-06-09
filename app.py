@@ -90,7 +90,7 @@ with tab2:
 
    # Menggabungkan semua atribut menjadi satu dataset
    all_data = df.drop('Outcome', axis=1)
-   all_scaled = scaler.fit_transform(all_data)
+   all_scaled = scaler.transform(all_data)
    kmeans_all = KMeans(n_clusters=2, random_state=0)
    kmeans_all.fit(all_scaled)
    labels_all = kmeans_all.labels_
@@ -99,3 +99,4 @@ with tab2:
    # Menampilkan skor siluet untuk seluruh data
    st.subheader('Silhouette Score for All Data:')
    st.write(silhouette_all)
+

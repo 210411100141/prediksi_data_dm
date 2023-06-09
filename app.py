@@ -23,7 +23,7 @@ st.sidebar.header('Patient Data')
 st.subheader('Training Data Stats')
 st.write(df.describe())
 
-tab1, tab2 = st.tabs(["Deskripsi Data","Tab Visualisasi data"])
+tab1, tab2, tab3 = st.tabs(["Deskripsi Data","Tab Visualisasi data","Clustering"])
 
 with tab1:
    st.image("bg.jpg")
@@ -34,6 +34,30 @@ with tab2:
    y = df.iloc[:, -1]
    scaler = MinMaxScaler()
    x_scaled = scaler.fit_transform(x)
+   
+with tab3:
+   st.header('Clustering pada Setiap Atribut')
+    
+    # Fungsi untuk melakukan clustering pada atribut tertentu
+    def perform_clustering(attribute):
+        data = df[[attribute]].values
+        scaler = MinMaxScaler()
+        data_scaled = scaler.fit_transform(data)
+        kmeans = KMeans(n_clusters=2, random_state=0)
+        kmeans.fit(data_scaled)
+        return data, kmeans.labels_
+    
+    # Daftar atribut untuk clustering
+    attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
+    
+    # Melakukan clustering pada setiap atribut dan menampilkan hasilnya
+    for attribute in attributes:
+        data, labels = perform_clustering(attribute)
+        st.subheader(f'Clustering pada Atribut: {attribute}')
+        fig = plt.figure()
+        plt.scatter(data, np.zeros_like(data), c=labels, cmap='viridis')
+        plt.title('0 - Cluster 1 & 1 - Cluster 2')
+        st.pyplot(fig)
    
    # FUNCTION
    def user_report():

@@ -102,6 +102,7 @@ with tab2:
    kmeans.fit(x_scaled)
    user_result = kmeans.predict(scaler.transform(user_data))
    cluster_labels = kmeans.labels_
+   silhouette = silhouette_score(x_scaled, cluster_labels)
   
    # MODEL SILUET
    # Fungsi untuk menghitung skor siluet dari clustering K-means

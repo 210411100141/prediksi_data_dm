@@ -64,7 +64,7 @@ with tab1:
        plot_diabetes_vs_normal(attribute)
 
 with tab2:
-    # Fungsi untuk menghitung skor siluet dari clustering K-means tiap atribut
+    # Fungsi untuk menghitung skor siluet dari clustering K-means
    def calculate_silhouette_score(attribute):
        data = df[[attribute]].values
        scaler = MinMaxScaler()
@@ -83,8 +83,19 @@ with tab2:
    for attribute in attributes:
        silhouette_scores[attribute] = calculate_silhouette_score(attribute)
 
-# Menampilkan skor siluet untuk setiap atribut
-st.subheader('Silhouette Scores:')
-for attribute, score in silhouette_scores.items():
-    st.write(f'{attribute}: {score}')
-  
+   # Menampilkan skor siluet untuk setiap atribut
+   st.subheader('Silhouette Scores:')
+   for attribute, score in silhouette_scores.items():
+       st.write(f'{attribute}: {score}')
+
+   # Menggabungkan semua atribut menjadi satu dataset
+   all_data = df.drop('Outcome', axis=1)
+   all_scaled = scaler.fit_transform(all_data)
+   kmeans_all = KMeans(n_clusters=2, random_state=0)
+   kmeans_all.fit(all_scaled)
+   labels_all = kmeans_all.labels_
+   silhouette_all = silhouette_score(all_scaled, labels_all)
+
+   # Menampilkan skor siluet untuk seluruh data
+   st.subheader('Silhouette Score for All Data:')
+   st.write(silhouette_all)

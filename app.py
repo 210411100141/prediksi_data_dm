@@ -16,20 +16,68 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 df = pd.read_csv("dm.csv")
-# Menampilkan data
-st.write(data)
-
-
 
 # HEADINGS
 st.title('Diabetes Checkup')
-
+st.subheader('Training Data Stats')
+st.write(df.describe())
 
 tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
 
 with tab1:
-   st.subheader('Training Data Stats')
-   st.write(df.describe())
+   # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
+   st.subheader('Clustering Data')  
+   def plot_diabetes_vs_normal(attribute):
+      diabetes_data = df[df['Outcome'] == 1][attribute]
+      normal_data = df[df['Outcome'] == 0][attribute]
+    
+      fig = plt.figure()
+      plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'])
+      plt.xlabel(attribute)
+      plt.ylabel('Frequency')
+      plt.legend(['Diabetes', 'Normal'])
+      st.pyplot(fig)
+
+   # Daftar atribut untuk clustering
+   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
+
+   # Melakukan clustering pada setiap atribut dan menampilkan hasilnya
+   for attribute in attributes:
+      plot_diabetes_vs_normal(attribute)
+
+   
+   # Grafik untuk diabetes vs normal pada setiap atribut
+   st.header('Grafik Diabetes vs Normal')
+
+   # Fungsi untuk membuat grafik diabetes vs normal
+   def plot_diabetes_vs_normal(attribute):
+       fig = plt.figure()
+       diabetes_data = df[df['Outcome'] == 1][attribute]
+       normal_data = df[df['Outcome'] == 0][attribute]
+       plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'], label=['Diabetes', 'Normal'])
+       plt.xlabel(attribute)
+       plt.ylabel('Frequency')
+       plt.legend()
+       st.pyplot(fig)
+
+   # Melakukan plot diabetes vs normal pada setiap atribut
+   for attribute in attributes:
+       plot_diabetes_vs_normal(attribute)
+   
+    # Fungsi untuk menghitung skor siluet dari clustering K-means
+   def calculate_silhouette_score(attribute):
+       data = df[[attribute]].values
+       scaler = MinMaxScaler()
+       data_scaled = scaler.fit_transform(data)
+       kmeans = KMeans(n_clusters=2, random_state=0)
+       kmeans.fit(data_scaled)
+       labels = kmeans.labels_
+       silhouette = silhouette_score(data_scaled, labels)
+       return silhouette
+
+   # Daftar atribut untuk clustering
+   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
+
 
 with tab2:
    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut

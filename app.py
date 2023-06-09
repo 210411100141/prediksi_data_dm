@@ -21,14 +21,7 @@ df = pd.read_csv("dm.csv")
 st.title('Diabetes Checkup')
 # Menampilkan data
 st.write(df)
-# Menampilkan beberapa baris pertama data
-st.write(df.head())
-# Menampilkan beberapa baris terakhir data
-st.write(df.tail())
-# Menampilkan kolom spesifik
-st.write(df['Usia'])
-# Menampilkan baris spesifik
-st.write(df.loc[baris])
+
 
 tab1, tab2, = st.tabs(["Statistik Data","Tab Clustering & Silhoutte Score"])
 

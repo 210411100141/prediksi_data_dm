@@ -16,15 +16,6 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 df = pd.read_csv("dm.csv")
-
-# HEADINGS
-st.title('Diabetes Checkup')
-st.subheader('Training Data Stats')
-st.write(df.describe())
-
-tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
-
-with tab1:
 # Menampilkan data
 print(data)
 
@@ -40,6 +31,15 @@ print(data['nama_kolom'])
 # Menampilkan baris spesifik
 print(data.loc[baris])
 
+# HEADINGS
+st.title('Diabetes Checkup')
+
+
+tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
+
+with tab1:
+   st.subheader('Training Data Stats')
+   st.write(df.describe())
 
 with tab2:
    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut

@@ -64,6 +64,44 @@ with tab1:
        plot_diabetes_vs_normal(attribute)
 
 with tab2:
+    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
+   def plot_diabetes_vs_normal(attribute):
+      diabetes_data = df[df['Outcome'] == 1][attribute]
+      normal_data = df[df['Outcome'] == 0][attribute]
+    
+      fig = plt.figure()
+      plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'])
+      plt.xlabel(attribute)
+      plt.ylabel('Frequency')
+      plt.legend(['Diabetes', 'Normal'])
+      st.pyplot(fig)
+
+   # Daftar atribut untuk clustering
+   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
+
+   # Melakukan clustering pada setiap atribut dan menampilkan hasilnya
+   for attribute in attributes:
+      plot_diabetes_vs_normal(attribute)
+
+   
+   # Grafik untuk diabetes vs normal pada setiap atribut
+   st.header('Grafik Diabetes vs Normal')
+
+   # Fungsi untuk membuat grafik diabetes vs normal
+   def plot_diabetes_vs_normal(attribute):
+       fig = plt.figure()
+       diabetes_data = df[df['Outcome'] == 1][attribute]
+       normal_data = df[df['Outcome'] == 0][attribute]
+       plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'], label=['Diabetes', 'Normal'])
+       plt.xlabel(attribute)
+       plt.ylabel('Frequency')
+       plt.legend()
+       st.pyplot(fig)
+
+   # Melakukan plot diabetes vs normal pada setiap atribut
+   for attribute in attributes:
+       plot_diabetes_vs_normal(attribute)
+   
     # Fungsi untuk menghitung skor siluet dari clustering K-means
    def calculate_silhouette_score(attribute):
        data = df[[attribute]].values

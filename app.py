@@ -17,7 +17,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 df = pd.read_csv("dm.csv")
 # Menampilkan data
-print(df)
+st.write(df)
 
 # HEADINGS
 st.title('Diabetes Checkup')

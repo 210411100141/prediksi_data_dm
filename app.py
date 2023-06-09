@@ -25,46 +25,11 @@ st.write(df.describe())
 tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
 
 with tab1:
-   # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
-   def plot_diabetes_vs_normal(attribute):
-      diabetes_data = df[df['Outcome'] == 1][attribute]
-      normal_data = df[df['Outcome'] == 0][attribute]
-    
-      fig = plt.figure()
-      plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'])
-      plt.xlabel(attribute)
-      plt.ylabel('Frequency')
-      plt.legend(['Diabetes', 'Normal'])
-      st.pyplot(fig)
-
-   # Daftar atribut untuk clustering
-   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
-
-   # Melakukan clustering pada setiap atribut dan menampilkan hasilnya
-   for attribute in attributes:
-      plot_diabetes_vs_normal(attribute)
-
    
-   # Grafik untuk diabetes vs normal pada setiap atribut
-   st.header('Grafik Diabetes vs Normal')
-
-   # Fungsi untuk membuat grafik diabetes vs normal
-   def plot_diabetes_vs_normal(attribute):
-       fig = plt.figure()
-       diabetes_data = df[df['Outcome'] == 1][attribute]
-       normal_data = df[df['Outcome'] == 0][attribute]
-       plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'], label=['Diabetes', 'Normal'])
-       plt.xlabel(attribute)
-       plt.ylabel('Frequency')
-       plt.legend()
-       st.pyplot(fig)
-
-   # Melakukan plot diabetes vs normal pada setiap atribut
-   for attribute in attributes:
-       plot_diabetes_vs_normal(attribute)
 
 with tab2:
-    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
+   # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
+   st.subheader('Clustering Data')  
    def plot_diabetes_vs_normal(attribute):
       diabetes_data = df[df['Outcome'] == 1][attribute]
       normal_data = df[df['Outcome'] == 0][attribute]
@@ -122,7 +87,7 @@ with tab2:
        silhouette_scores[attribute] = calculate_silhouette_score(attribute)
 
    # Menampilkan skor siluet untuk setiap atribut
-   st.subheader('Silhouette Scores:')
+   st.subheader('Silhouette Score Atribut:')
    for attribute, score in silhouette_scores.items():
        st.write(f'{attribute}: {score}')
 
@@ -141,6 +106,6 @@ with tab2:
    silhouette_all = silhouette_score(all_scaled, labels_all)
 
    # Menampilkan skor siluet untuk seluruh data
-   st.subheader('Silhouette Score for All Data:')
+   st.subheader('Silhouette Score Semua Data:')
    st.write(silhouette_all)
 

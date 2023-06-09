@@ -132,8 +132,6 @@ if user_result[0] == 0:
 else:
   output = 'You belong to Cluster 2'
 st.title(output)
-st.subheader('Accuracy: ')
-st.write('N/A')
 st.subheader('Silhouette Score:')
 st.write(silhouette)
 

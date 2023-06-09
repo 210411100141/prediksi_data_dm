@@ -88,6 +88,12 @@ with tab2:
    for attribute, score in silhouette_scores.items():
        st.write(f'{attribute}: {score}')
 
+   # X AND Y DATA
+   x = df.drop(['Outcome'], axis=1)
+   y = df.iloc[:, -1]
+   scaler = MinMaxScaler()
+   x_scaled = scaler.fit_transform(x)
+
    # Menggabungkan semua atribut menjadi satu dataset
    all_data = df.drop('Outcome', axis=1)
    all_scaled = scaler.transform(all_data)

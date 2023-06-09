@@ -123,6 +123,11 @@ attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
 silhouette_scores = {}
 for attribute in attributes:
     silhouette_scores[attribute] = calculate_silhouette_score(attribute)
+      
+# Menampilkan skor siluet untuk setiap atribut
+st.subheader('Silhouette Scores:')
+for attribute, score in silhouette_scores.items():
+    st.write(f'{attribute}: {score}')
 
 st.subheader('Silhouette Scores:')
 for attribute, score in silhouette_scores.items():
@@ -193,6 +198,5 @@ else:
   output = 'You belong to Cluster 2'
 st.title(output)
 st.subheader('Silhouette Scores:')
-for attribute, score in silhouette_scores.items():
-    st.write(f'{attribute}: {score}')
-
+st.subheader('Silhouette Score:')
+st.write(silhouette)

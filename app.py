@@ -33,8 +33,7 @@ with tab1:
 
 with tab2:
    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
-   st.header('Grafik Diabetes vs Normal')
-   st.subheader('Clustering Data')  
+   st.header('Grafik Diabetes vs Normal') 
    def plot_diabetes_vs_normal(attribute):
       diabetes_data = df[df['Outcome'] == 1][attribute]
       normal_data = df[df['Outcome'] == 0][attribute]

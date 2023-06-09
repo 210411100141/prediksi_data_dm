@@ -18,7 +18,7 @@ from sklearn.preprocessing import MinMaxScaler
 df = pd.read_csv("dm.csv")
 
 # HEADINGS
-st.title('Klasterisasi Penyakit Diabetes Model K-Means')
+st.title('Klasterisasi Penyakit Diabetes Melitus Model K-Means')
 # Menampilkan data
 st.subheader('Dataset')
 st.write(df)

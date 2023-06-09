@@ -61,7 +61,7 @@ with tab2:
        fig = plt.figure()
        diabetes_data = df[df['Outcome'] == 1][attribute]
        normal_data = df[df['Outcome'] == 0][attribute]
-       plt.hist([diabetes_data, normal_data], bins=10, color=['green', 'yellow'], label=['Diabetes', 'Normal'])
+       plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'], label=['Diabetes', 'Normal'])
        plt.xlabel(attribute)
        plt.ylabel('Frequency')
        plt.legend()

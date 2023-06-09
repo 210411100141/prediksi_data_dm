@@ -16,17 +16,17 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 df = pd.read_csv("dm.csv")
+# Menampilkan data
+print(df)
 
 # HEADINGS
 st.title('Diabetes Checkup')
-st.subheader('Training Data Stats')
-st.write(df.describe())
 
 tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
 
 with tab1:
-   # Menampilkan data
-   print(df)
+   st.subheader('Training Data Stats')
+   st.write(df.describe())
 
 
 with tab2:

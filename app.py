@@ -25,44 +25,21 @@ st.write(df.describe())
 tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
 
 with tab1:
-    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
-   st.subheader('Clustering Data')  
-   def plot_diabetes_vs_normal(attribute):
-      diabetes_data = df[df['Outcome'] == 1][attribute]
-      normal_data = df[df['Outcome'] == 0][attribute]
-    
-      fig = plt.figure()
-      plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'])
-      plt.xlabel(attribute)
-      plt.ylabel('Frequency')
-      plt.legend(['Diabetes', 'Normal'])
-      st.pyplot(fig)
+# Menampilkan data
+print(data)
 
-   # Daftar atribut untuk clustering
-   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
+# Menampilkan beberapa baris pertama data
+print(data.head())
 
-   # Melakukan clustering pada setiap atribut dan menampilkan hasilnya
-   for attribute in attributes:
-      plot_diabetes_vs_normal(attribute)
+# Menampilkan beberapa baris terakhir data
+print(data.tail())
 
-   
-   # Grafik untuk diabetes vs normal pada setiap atribut
-   st.header('Grafik Diabetes vs Normal')
+# Menampilkan kolom spesifik
+print(data['nama_kolom'])
 
-   # Fungsi untuk membuat grafik diabetes vs normal
-   def plot_diabetes_vs_normal(attribute):
-       fig = plt.figure()
-       diabetes_data = df[df['Outcome'] == 1][attribute]
-       normal_data = df[df['Outcome'] == 0][attribute]
-       plt.hist([diabetes_data, normal_data], bins=10, color=['red', 'blue'], label=['Diabetes', 'Normal'])
-       plt.xlabel(attribute)
-       plt.ylabel('Frequency')
-       plt.legend()
-       st.pyplot(fig)
+# Menampilkan baris spesifik
+print(data.loc[baris])
 
-   # Melakukan plot diabetes vs normal pada setiap atribut
-   for attribute in attributes:
-       plot_diabetes_vs_normal(attribute)
 
 with tab2:
    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut

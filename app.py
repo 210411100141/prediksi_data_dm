@@ -19,11 +19,10 @@ df = pd.read_csv("dm.csv")
 
 # HEADINGS
 st.title('Diabetes Checkup')
-st.sidebar.header('Patient Data')
 st.subheader('Training Data Stats')
 st.write(df.describe())
 
-tab1, tab2, = st.tabs(["Deskripsi Data","Tab Visualisasi data"])
+tab1, tab2, = st.tabs(["Clustering","Tab Visualisasi data"])
 
 with tab1:
    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
@@ -92,84 +91,6 @@ with tab2:
       report_data = pd.DataFrame(user_report_data, index=[0])
       return report_data
      
-   # PATIENT DATA
-   user_data = user_report()
-   st.subheader('Patient Data')
-   st.write(user_data)
-    
-   # MODEL
-   kmeans = KMeans(n_clusters=2, random_state=0)
-   kmeans.fit(x_scaled)
-   user_result = kmeans.predict(scaler.transform(user_data))
-   cluster_labels = kmeans.labels_
-   silhouette = silhouette_score(x_scaled, cluster_labels)
   
-  
-      
-   # COLOR FUNCTION
-   if user_result[0] == 0:
-      color = 'blue'
-   else:
-      color = 'red'
-   
-   # usia vs glukosa
-   st.header('Glukosa count Graph (Others vs Yours)')
-   fig_glukosa = plt.figure()
-   plt.scatter(df['Usia'], df['Glukosa'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['usia'], user_data['glukosa'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 10))
-   plt.yticks(np.arange(60, 200, 10))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_glukosa)
-   
-   # usia vs tekanan darah
-   st.header('Tekanan Darah Graph (Others vs Yours)')
-   fig_td = plt.figure()
-   plt.scatter(df['Usia'], df['Tekanan darah'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['usia'], user_data['td'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 10))
-   plt.yticks(np.arange(0, 120, 10))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_td)
-
-   # usia vs ketebalan kulit
-   st.header('Ketebalan Kulit Value Graph (Others vs Yours)')
-   fig_kk = plt.figure()
-   plt.scatter(df['Usia'], df['Ketebalan Kulit'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['usia'], user_data['kk'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 10))
-   plt.yticks(np.arange(0, 60, 5))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_kk)
-
-   # usia vs insulin
-   st.header('Insulin Value Graph (Others vs Yours)')
-   fig_insulin = plt.figure()
-   plt.scatter(df['Usia'], df['Insulin'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['usia'], user_data['insulin'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 10))
-   plt.yticks(np.arange(0, 920, 50))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_insulin)
-
-   # Age vs BMI
-   st.header('BMI Value Graph (Others vs Yours)')
-   fig_bmi = plt.figure()
-   plt.scatter(df['Usia'], df['BMI'], c=kmeans.labels_, cmap='viridis')
-   plt.scatter(user_data['usia'], user_data['bmi'], s=150, color=color)
-   plt.xticks(np.arange(10, 100, 10))
-   plt.yticks(np.arange(10, 470, 25))
-   plt.title('0 - Cluster 1 & 1 - Cluster 2')
-   st.pyplot(fig_bmi)
-
 # OUTPUT
-st.subheader('Your Report: ')
-output = ''
-if user_result[0] == 0:
-  output = 'You belong to Cluster 1'
-else:
-  output = 'You belong to Cluster 2'
-st.title(output)
-st.subheader('Silhouette Scores:')
-st.subheader('Silhouette Score:')
-st.write(silhouette)
+

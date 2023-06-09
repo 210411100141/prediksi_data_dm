@@ -17,19 +17,9 @@ from sklearn.preprocessing import MinMaxScaler
 
 df = pd.read_csv("dm.csv")
 # Menampilkan data
-print(data)
+st.write(data)
 
-# Menampilkan beberapa baris pertama data
-print(data.head())
 
-# Menampilkan beberapa baris terakhir data
-print(data.tail())
-
-# Menampilkan kolom spesifik
-print(data['nama_kolom'])
-
-# Menampilkan baris spesifik
-print(data.loc[baris])
 
 # HEADINGS
 st.title('Diabetes Checkup')

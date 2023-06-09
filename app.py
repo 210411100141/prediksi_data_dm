@@ -60,31 +60,6 @@ silhouette_all = silhouette_score(all_scaled, labels_all)
 st.subheader('Silhouette Score for All Data:')
 st.write(silhouette_all)
 
- # Fungsi untuk menghitung skor siluet dari clustering K-means tiap atribut
-   def calculate_silhouette_score(attribute):
-       data = df[[attribute]].values
-       scaler = MinMaxScaler()
-       data_scaled = scaler.fit_transform(data)
-       kmeans = KMeans(n_clusters=2, random_state=0)
-       kmeans.fit(data_scaled)
-       labels = kmeans.labels_
-       silhouette = silhouette_score(data_scaled, labels)
-       return silhouette
-
-   # Daftar atribut untuk clustering
-   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
-
-   # Melakukan perhitungan skor siluet pada setiap atribut
-   silhouette_scores = {}
-   for attribute in attributes:
-       silhouette_scores[attribute] = calculate_silhouette_score(attribute)
-
-# Menampilkan skor siluet untuk setiap atribut
-st.subheader('Silhouette Scores:')
-for attribute, score in silhouette_scores.items():
-    st.write(f'{attribute}: {score}')
-
-
 with tab1:
    # Fungsi untuk menampilkan grafik perbandingan diabetes vs normal pada suatu atribut
    def plot_diabetes_vs_normal(attribute):
@@ -125,4 +100,27 @@ with tab1:
        plot_diabetes_vs_normal(attribute)
 
 with tab2:
+    # Fungsi untuk menghitung skor siluet dari clustering K-means tiap atribut
+   def calculate_silhouette_score(attribute):
+       data = df[[attribute]].values
+       scaler = MinMaxScaler()
+       data_scaled = scaler.fit_transform(data)
+       kmeans = KMeans(n_clusters=2, random_state=0)
+       kmeans.fit(data_scaled)
+       labels = kmeans.labels_
+       silhouette = silhouette_score(data_scaled, labels)
+       return silhouette
+
+   # Daftar atribut untuk clustering
+   attributes = df.columns[:-1]  # Mengambil semua kolom kecuali kolom Outcome
+
+   # Melakukan perhitungan skor siluet pada setiap atribut
+   silhouette_scores = {}
+   for attribute in attributes:
+       silhouette_scores[attribute] = calculate_silhouette_score(attribute)
+
+# Menampilkan skor siluet untuk setiap atribut
+st.subheader('Silhouette Scores:')
+for attribute, score in silhouette_scores.items():
+    st.write(f'{attribute}: {score}')
   

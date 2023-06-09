@@ -23,7 +23,7 @@ st.sidebar.header('Patient Data')
 st.subheader('Training Data Stats')
 st.write(df.describe())
 
-tab1, tab2, tab3 = st.tabs(["Deskripsi Data","Tab Visualisasi data"])
+tab1, tab2 = st.tabs(["Deskripsi Data","Tab Visualisasi data"])
 
 with tab1:
    st.image("bg.jpg")
